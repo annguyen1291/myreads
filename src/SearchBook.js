@@ -9,12 +9,22 @@ class SearchBook extends Component {
     books: []
   }
 
-  updateQuery = (query) => {
+  updateQuery = (query, books) => {
     this.setState(() => ({query: query.trim()}))
+    const bookIDs = books.map((book) => (book.id))
 
     BooksAPI.search(query)
-      .then((books) => {
-        this.setState(() => (books === undefined ? {books: []} : {books: books}))
+      .then((b) => {   
+        if (Array.isArray(b)) {
+          b.forEach((b) => {
+            if (bookIDs.includes(b.id)) {
+              b.shelf =  books.filter((book) => (book.id === b.id))[0].shelf
+            }
+          })
+          this.setState(() => ({books: b}))
+        } else {
+          this.setState(() => ({books: []}))
+        }
       })
   }
 
@@ -24,12 +34,12 @@ class SearchBook extends Component {
       <div className="search-books-bar">
         <Link to='/'><button className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</button></Link>
         <div className="search-books-input-wrapper">
-          <input type="text" onChange={(event) => this.updateQuery(event.target.value)} placeholder="Search by title or author"/>
+          <input type="text" onChange={(event) => this.updateQuery(event.target.value, this.props.books)} placeholder="Search by title or author"/>
         </div>
       </div>
       <div className="search-books-results">
         <ol className="books-grid">
-          {this.state.books.map((book) => (<Book key={book.id} book={book} onMoveShelf={this.props.onMoveShelf} />))}
+          {this.state.books.filter((book) => (book.imageLinks !== undefined && book.authors !== undefined)).map((book) => (<Book key={book.id} book={book} onChangeShelf={this.props.onAddBook} />))}
         </ol>
       </div>
     </div>
