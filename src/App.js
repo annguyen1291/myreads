@@ -38,9 +38,7 @@ class BooksApp extends React.Component {
         )} />
         <Route path='/search' render={({ history }) => (
           <SearchBook 
-            onUpdateBook={(book, shelf) => {
-              history.push('/')
-            }}
+              onMoveShelf={this.moveShelf}
           />
         )} />        
       </div>
