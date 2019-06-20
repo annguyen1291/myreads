@@ -25,7 +25,7 @@ class ListBooks extends Component {
           <h1>MyReads</h1>
         </div>
         <div className="list-books-content">
-          {shelves.map((shelf) => (<BookShelf key={shelf.name} books={this.props.books.filter((book) => (book.shelf === shelf.name))} shelf={shelf.text} />))}
+          {shelves.map((shelf) => (<BookShelf key={shelf.name} books={this.props.books.filter((book) => (book.shelf === shelf.name))} shelf={shelf.text} onMoveShelf={this.props.onMoveShelf} />))}
         </div>
         <div className="open-search">          
           <Link to='/search'><button></button></Link>          
