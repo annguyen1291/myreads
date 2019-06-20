@@ -39,7 +39,7 @@ class SearchBook extends Component {
       </div>
       <div className="search-books-results">
         <ol className="books-grid">
-          {this.state.books.filter((book) => (book.imageLinks !== undefined && book.authors !== undefined)).map((book) => (<Book key={book.id} book={book} onChangeShelf={this.props.onAddBook} />))}
+          {this.state.books.filter((book) => (book.imageLinks !== undefined && book.authors !== undefined)).map((book) => (<Book key={book.id} book={book} onMoveShelf={this.props.onMoveShelf} />))}
         </ol>
       </div>
     </div>
